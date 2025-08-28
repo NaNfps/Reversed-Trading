@@ -1,40 +1,45 @@
 package me.nanfps.reversedtrading.util;
 
+import com.google.common.collect.Lists;
 import me.nanfps.reversedtrading.Config;
-import net.minecraft.core.component.DataComponentPredicate;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.WanderingTrader;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.item.trading.MerchantOffers;
+import net.minecraft.entity.passive.MerchantEntity;
+import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.entity.passive.WanderingTraderEntity;
+import net.minecraft.village.TradeOffer;
+import net.minecraft.village.TradeOfferList;
+
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
- * This file was created in 2025.08.27, 23:56
+ * This file was created in 2025.08.28, 22:42
  *
  * @author NaN FPS
  */
 
 public final class Reverser {
-    public static boolean shouldEnable(AbstractVillager abstractVillager) {
-        return (Config.ENABLE_VILLAGERS.get() || !(abstractVillager instanceof Villager)) && (Config.ENABLE_WANDERING_TRADERS.get() || !(abstractVillager instanceof WanderingTrader));
+    private static final Set<String> SPECIAL_NAMES = Set.of("Dinnerbone", "Grumm");
+
+    private Reverser() {
+    }
+
+    public static boolean shouldEnable(MerchantEntity abstractVillager) {
+        return (Config.ENABLE_VILLAGERS.get() || !(abstractVillager instanceof VillagerEntity)) && (Config.ENABLE_WANDERING_TRADERS.get() || !(abstractVillager instanceof WanderingTraderEntity));
     }
 
     public static boolean isNameCorrect(String name) {
-        return name.equals("Dinnerbone") || name.equals("Grumm");
+        return SPECIAL_NAMES.contains(name);
     }
 
-    public static MerchantOffer reverse(MerchantOffer it) {
-        return it.costB.isEmpty() ? new MerchantOffer(new ItemCost(it.getResult().getItemHolder(), it.getResult().getCount(), DataComponentPredicate.allOf(it.getResult().getComponents())), it.costB, it.getCostA(), it.getUses(), it.getMaxUses(), it.getXp(), it.getPriceMultiplier(), it.getDemand()) : it;
+    public static TradeOffer reverse(TradeOffer it) {
+        return it.getSecondBuyItem().isEmpty() ? new TradeOffer(it.getSellItem(), it.getSecondBuyItem(), it.getOriginalFirstBuyItem(), it.getUses(), it.getMaxUses(), it.getMerchantExperience(), it.getPriceMultiplier(), it.getDemandBonus()) : it;
     }
 
-    public static MerchantOffers reverse(MerchantOffers original, AbstractVillager abstractVillager) {
-        if(abstractVillager != null) {
-            if(shouldEnable(abstractVillager) && isNameCorrect(abstractVillager.getName().getString())) {
-                return new MerchantOffers(original.stream().map(Reverser::reverse).toList());
-            }
-        }
-
-        return original;
+    public static TradeOfferList reverse(TradeOfferList original, MerchantEntity abstractVillager) {
+        return abstractVillager != null && shouldEnable(abstractVillager) && isNameCorrect(abstractVillager.getName().getString())
+                       ? original.stream().map(Reverser::reverse)
+                                 .collect(Collectors.toCollection(TradeOfferList::new))
+                       : original;
     }
 }

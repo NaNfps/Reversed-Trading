@@ -1,14 +1,14 @@
 {
-  "required": true,
-  "package": "me.nanfps.reversedtrading.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "MixinAbstractVillager"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  },
-  "overwrites": {
-    "requireAnnotations": true
-  }
+	"required": true,
+	"package": "me.nanfps.reversedtrading.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"MixinMerchantEntity"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
 }

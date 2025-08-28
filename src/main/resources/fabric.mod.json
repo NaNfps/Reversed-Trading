@@ -1,0 +1,35 @@
+{
+	"schemaVersion": 1,
+	"id": "reversedtrading",
+	"version": "${version}",
+	"name": "Reversed Trading",
+	"description": "You can now reverse villagers' trade by naming them Dinnerbone or Grumm",
+	"authors": [
+		"NaNFPS"
+	],
+	"contact": {
+		"sources": "https://github.com/NaNfps/Reversed-Trading"
+	},
+	"license": "GPLv3",
+	"icon": "assets/reversedtrading/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.nanfps.reversedtrading.ReversedTrading"
+		]
+	},
+	"accessWidener" : "reversedtrading.accesswidener",
+	"mixins": [
+		"reversedtrading.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": ">=1.19.3 <=1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"forgeconfigapiport": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
