@@ -3,8 +3,7 @@
   "package": "me.nanfps.reversedtrading.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MixinAbstractVillager",
-    "MixinVillager"
+    "MixinAbstractVillager"
   ],
   "injectors": {
     "defaultRequire": 1
