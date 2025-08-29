@@ -9,6 +9,8 @@ import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 
+import java.util.Set;
+
 /**
  * This file was created in 2025.08.27, 23:56
  *
@@ -16,12 +18,17 @@ import net.minecraft.world.item.trading.MerchantOffers;
  */
 
 public final class Reverser {
+    private static final Set<String> SPECIAL_NAMES = Set.of("Dinnerbone", "Grumm");
+
+    private Reverser() {
+    }
+
     public static boolean shouldEnable(AbstractVillager abstractVillager) {
         return (Config.ENABLE_VILLAGERS.get() || !(abstractVillager instanceof Villager)) && (Config.ENABLE_WANDERING_TRADERS.get() || !(abstractVillager instanceof WanderingTrader));
     }
 
     public static boolean isNameCorrect(String name) {
-        return name.equals("Dinnerbone") || name.equals("Grumm");
+        return SPECIAL_NAMES.contains(name);
     }
 
     public static MerchantOffer reverse(MerchantOffer it) {
