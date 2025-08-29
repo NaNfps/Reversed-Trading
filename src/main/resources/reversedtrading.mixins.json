@@ -3,12 +3,12 @@
   "package": "me.nanfps.reversedtrading.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MixinAbstractVillager"
+    "MixinMerchantEntity"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  }
+	}
 }

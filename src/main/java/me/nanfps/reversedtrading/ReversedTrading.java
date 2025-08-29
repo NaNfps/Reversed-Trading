@@ -1,24 +1,22 @@
 package me.nanfps.reversedtrading;
 
-import com.mojang.logging.LogUtils;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
+import fuzs.forgeconfigapiport.fabric.api.forge.v4.ForgeConfigRegistry;
+import net.fabricmc.api.ModInitializer;
+
 import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(ReversedTrading.MODID)
-public class ReversedTrading {
-    // Define mod id in a common place for everything to reference
-    public static final String MODID = "reversedtrading";
-    // Directly reference a slf4j logger
-    public static final Logger LOGGER = LogUtils.getLogger();
+public class ReversedTrading implements ModInitializer {
+	public static final String MOD_ID = "reversedtrading";
 
-    // The constructor for the mod class is the first code that is run when your mod is loaded.
-    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public ReversedTrading(IEventBus modEventBus, ModContainer modContainer) {
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.SERVER, Config.SPEC);
-    }
+	// This logger is used to write text to the console and the log file.
+	// It is considered best practice to use your mod id as the logger's name.
+	// That way, it's clear which mod wrote info, warnings, and errors.
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	@Override
+	public void onInitialize() {
+		ForgeConfigRegistry.INSTANCE.register(MOD_ID, ModConfig.Type.SERVER, Config.SPEC);
+	}
 }
