@@ -12,7 +12,7 @@
 	},
 	"license": "GPLv3",
 	"icon": "assets/reversedtrading/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
 		"main": [
 			"me.nanfps.reversedtrading.ReversedTrading"
